@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 
 #Kersten Doering 28.07.2015
+import csv
+
 
 cids = {}
 infile = open("pubchem_smiles.smi","r")
@@ -17,22 +19,37 @@ for line in infile:
     mols[temp[1].replace(".mol","")] = temp[0]
 infile.close()
 
-infile = open("01_NA_Family_A_Smiles.csv","r")
+infile = open("inp_smi.csv","r")
 outfile = open("01_NA_Family_A_Smiles-o.csv","w")
-for line in infile:
-    if "PubChem Non canonical SMILES" in line:
-        outfile.write("\t\t\t\t" + line.strip() + "\t" + "PubChem canonical SMILES" + "\t" + "mol canonical SMILES" + "\n")
-        continue
-    temp = line.strip().split("\t")
-    try:
-        cid = str(int(temp[2]))
-        if cid in cids:
-            outfile.write(line.strip() + "\t" + cids[cid] + "\t")
-    except:
-        outfile.write(line.strip() + "\t\t\t\t\t" )
-    if temp[0] in mols:
-        outfile.write(mols[temp[0]] + "\n")
-    else:
-        outfile.write("\n")
+
+with open('inp_smi.csv', 'r', newline='') as in_file:
+    reader = csv.reader(in_file)
+    # skip header
+    next(reader)
+    for line in reader:
+        print(line)
+        if "PubChem Non canonical SMILES" in line:
+            outfile.write("\t\t\t\t" + line.strip() + "\t" + "PubChem canonical SMILES" + "\t" + "mol canonical SMILES" + "\n")
+            continue
+        #temp = line.strip().split(",")
+        cid = line[1]
+        if cid != "":
+            cid = int(float(cid))
+        if str(cid) in cids.keys():
+            smi = cids[str(cid)]
+            #Here we need to save the smiles into the output file
+            #outfile.write(line.strip() + "\t" + cids[cid] + "\t")
+        else:
+            continue
+            #outfile.write(line.strip() + "\t\t\t\t\t" )
+
+        cc = line[0]
+        print(cc)
+        print(type(cc))
+        if cc in mols.keys():
+            print("HERE")
+            outfile.write(mols[temp[0]] + "\n")
+        else:
+            outfile.write("\n")
 outfile.close()
 infile.close()
