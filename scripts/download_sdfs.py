@@ -5,12 +5,12 @@
 
 # generate shell script for downloading SDF files
 # example: wget -O 5311498_later.sdf https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5311498/record/SDF/ -a wget.log
-c1 = "wget -O ../sdfs/"
+c1 = "wget -O sdfs/"
 c2 = ".sdf https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/"
 c3 = "/record/SDF/ -a wget.log"
 
-infile = open("../data/01_NA_Family_A_Smiles.csv","r")
-outfile = open("download.sh","w")
+infile = open("data/01_NA_Family_A_Smiles.csv","r") # change the name of the input file as you need
+outfile = open("scripts/download.sh","w")
 for line in infile:
 	try:
 		cid = str(int(line.strip().split(",")[-4]))

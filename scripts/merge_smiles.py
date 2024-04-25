@@ -19,10 +19,38 @@ for line in infile:
     mols[temp[1].replace(".mol","")] = temp[0]
 infile.close()
 
+infile = 'data/01_NA_Family_A_Smiles.csv'
+outfile = "data/01_NA_Family_A_Smiles-o.csv"
+
+with open(infile, 'r', newline='') as in_file:
+    reader = csv.reader(in_file)
+    header = next(reader) # we skip the header of the file
+    lines = []
+    for line in reader:
+        if line[0] == "": #we are only keeping the lines that have a molecule code
+            continue
+        else:
+            cid = line[1]
+            print(cid)
+            if cid in cids.keys():
+                smi = cids[cid]
+                line[2] = smi #add the smiles in position 3 of the line, PubChem smiles
+            cc = line[0]
+            if cc in mols.keys():
+                smi = mols[cc]
+                line[3] = smi
+        lines += [line]
+
+with open(outfile, 'w', newline='') as out_file:
+    writer = csv.writer(out_file)
+    writer.writerow(header)  # Write the header
+    writer.writerows(lines)  # Write the rest of the data
 
 
-infile = open("01_NA_Family_A_Smiles.csv","r")
-#infile = open("inp_smi.csv","r")
+
+"""
+
+infile = open("01_NA_Family_A_Smiles.csv","r") #change with name from input file
 outfile = open("01_NA_Family_A_Smiles-o.csv","w")
 
 
