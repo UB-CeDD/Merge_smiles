@@ -4,23 +4,28 @@
 #Kersten Doering 28.07.2015
 import csv
 
-
+# Get CIDS from PUBCHEM 
 cids = {}
-infile = open("pubchem_smiles.smi","r")
+infile = open("data/pubchem_smiles.smi","r")
 for line in infile:
     temp = line.strip().split("\t")
     cids[temp[1]] = temp[0]
 infile.close()
 
 mols = {}
-infile = open("mol_smiles.smi","r")
+infile = open("data/mol_smiles.smi","r")
 for line in infile:
     temp = line.strip().split("\t")
     mols[temp[1].replace(".mol","")] = temp[0]
 infile.close()
 
-infile = open("inp_smi.csv","r")
+
+
+infile = open("01_NA_Family_A_Smiles.csv","r")
+#infile = open("inp_smi.csv","r")
 outfile = open("01_NA_Family_A_Smiles-o.csv","w")
+
+
 
 with open('inp_smi.csv', 'r', newline='') as in_file:
     reader = csv.reader(in_file)
@@ -53,3 +58,4 @@ with open('inp_smi.csv', 'r', newline='') as in_file:
             outfile.write("\n")
 outfile.close()
 infile.close()
+"""
