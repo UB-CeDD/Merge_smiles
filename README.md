@@ -14,6 +14,8 @@ Get sdf files from PubChem using a list of PubChem IDs:
 ```
 mkdir sdfs #create a folder to store the sdf files
 python scripts/download_sdfs.py # prepare the download.sh file
+OR
+python3 scripts/download_sdfs.py # for WSL and Ubuntu users
 bash scripts/download.sh  # download sdf files
 cat sdfs/* > sdfs/structures.sdf # get all individual sdf files into one
 babel -isdf sdfs/structures.sdf -ocan data/pubchem_smiles.smi -b #concatenate SMILES from the SDF file into a single .smi file
@@ -29,6 +31,8 @@ To obtain the SMILES from the `mol-files` simply run:
 #place the mol-files folder in this repository
 mkdir smiles
 python scripts/get_smiles.py #this will extract the mol file as a .smi file
+OR
+python3 scripts/get_smiles.py # for WSL and Ubuntu users
 cat smiles/* > data/mol_smiles.smi #concatenate all SMILES into a single file
 ```
 You should have a mol-files folder in the root of the repository with the files you want to process, and you will get a mol_smiles.smi file as output
@@ -38,5 +42,7 @@ You should have a mol-files folder in the root of the repository with the files 
 To obtain a csv file with the molecules identified by their Compound Code and their PubChem CID (if available) and the SMILES from either the PubChem download or the manual files, run the following:
 
 ```
-python scripts/merge_smiles.py 
+python scripts/merge_smiles.py
+OR
+python3 scripts/merge_smiles.py # for WSL and Ubuntu users 
 ```
